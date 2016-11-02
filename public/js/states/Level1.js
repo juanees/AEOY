@@ -322,6 +322,8 @@ PoligonosDeLaMuerte.Level1.prototype ={
             if(PoligonosDeLaMuerte.EnemyBoss.prototype.isPrototypeOf(enemy)){
                 if(!player.inmune){
                     this.damagePlayer(5,6);
+                    
+                    enemy.stealHamb();
                 }
             }
             else if(PoligonosDeLaMuerte.EnemyNormal.prototype.isPrototypeOf(enemy)){

@@ -27,6 +27,8 @@ PoligonosDeLaMuerte.Preloader.prototype ={
         
         this.load.image('zombie1','assets/images/zombie1.png');
         this.load.image('zombie2','assets/images/zombie2.png');
+        this.load.image('zombie3','assets/images/zombie3.png');
+        
         
         this.load.image('hamburger','assets/images/hamburger.png');
         this.load.image('bullet','assets/images/bullet.png');
