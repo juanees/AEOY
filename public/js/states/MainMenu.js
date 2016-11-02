@@ -1,19 +1,19 @@
-var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {};
-PoligonosDeLaMuerte.MainMenu = function (game){
-};
+var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {score:0};
+PoligonosDeLaMuerte.MainMenu = function (game){};
 
 var titlescreen;
 
 PoligonosDeLaMuerte.MainMenu.prototype ={
 	create:function(game){
+        this.game.stage.backgroundColor = '#000000';
 		var button = this.createButton(game,"Play",game.world.centerX,game.world.centerY+32, 300,100,
 			function() {
 			this.state.start('Level1');
 			});
-		this.createButton(game,"About",game.world.centerX,game.world.centerY+192, 300,100,
+		/*this.createButton(game,"Volver",game.world.centerX,game.world.centerY+192, 300,100,
 			function() {
-			console.log("About");
-			});
+			console.log("Volver");
+			});*/
 		titlescreen  = game.add.sprite(game.world.centerX,game.world.centerY-192,'titlescreen');
 		titlescreen.anchor.setTo(0.5);
         this.camera.follow(button, Phaser.Camera.FOLLOW_LOCKON);

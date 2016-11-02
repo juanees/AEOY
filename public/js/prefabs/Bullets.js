@@ -1,4 +1,4 @@
-var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {};
+var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {score:0};
 
 PoligonosDeLaMuerte.Normal = function(game, x, y) {
     Phaser.Sprite.call(this, game, x, y, 'bullet');

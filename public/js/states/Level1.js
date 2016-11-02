@@ -1,11 +1,11 @@
 
-var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {};
+var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {score:0};
 
 PoligonosDeLaMuerte.Level1 = function (game){};
 
 
 //var player;
-var controls ={};
+/*var controls ={};
 var PLAYER_SPEED=350;
 
 var FIRE_RATE_NORMAL=250;
@@ -23,7 +23,8 @@ var WAVE_COUNT=1;
 
 var amountZombies=0;
 
-var PLAYER_LIFE=30;
+var PLAYER_LIFE=30;*/
+
 
 
 
@@ -34,7 +35,21 @@ PoligonosDeLaMuerte.Level1.prototype ={
         
         this.game.world.setBounds(-10, -10, this.game.width + 20, this.game.height + 20);
         this.DEBUG = false;
-		this.INMUNE_TIME=250; 
+        
+		this.INMUNE_TIME=250;
+        
+        this.controls ={};
+        this.PLAYER_SPEED=350;      
+        this.FIRE_RATE_NORMAL=250;
+        this.FIRE_RATE_MACHINE_GUN=50;      
+        this.NEXT_FIRE=0;
+        this.NEXT_WAVE=true;
+        this.TIME_BTW_WAVES=2000;
+        this.MAX_ZOMBIES=5;
+        this.WAVE_INCREMENT=5;
+        this.WAVE_COUNT=1;
+        this.amountZombies=0;
+        this.PLAYER_LIFE=30;
         
         this.stage.backgroundColor='#FFFFF';
         
@@ -78,7 +93,7 @@ PoligonosDeLaMuerte.Level1.prototype ={
        
 		this.map.setCollisionBetween(1, 100, true, 'plataformLayer');
         
-		controls = {			
+		this.controls = {			
 			right:this.input.keyboard.addKey(Phaser.Keyboard.D),
 		
 			left:this.input.keyboard.addKey(Phaser.Keyboard.A),
@@ -115,20 +130,20 @@ PoligonosDeLaMuerte.Level1.prototype ={
             if(this.BULLET_TYPE[this.actualWeapon]===this.BULLET_TYPE[this.BULLET_TYPE.indexOf('ZEUS')]){
                 this.player.loadTexture('playerLightning', 0, false);
                 this.player.scale.setTo(0.4);  
-                PLAYER_SPEED=350;
+                this.PLAYER_SPEED=350;
             }else{
                 this.game.physics.arcade.collide(this.bullets, this.enemies, this.damageEnemy.bind(this));
                 this.player.loadTexture('player', 0, false);
                 this.player.scale.setTo(0.25);
                 if(this.BULLET_TYPE[this.actualWeapon]===this.BULLET_TYPE[this.BULLET_TYPE.indexOf('MACHINE_GUN')])
                 {
-                    PLAYER_SPEED=250;
+                    this.PLAYER_SPEED=250;
                 }else{
-                    PLAYER_SPEED=350;
+                    this.PLAYER_SPEED=350;
                 }
             }
             
-            if(controls.change.isDown && this.player.changeWeapon){
+            if(this.controls.change.isDown && this.player.changeWeapon){
                 this.player.changeWeapon = false;
                 this.game.time.events.add(200, function() {
                 this.player.changeWeapon = true;}, this);
@@ -137,26 +152,26 @@ PoligonosDeLaMuerte.Level1.prototype ={
             }
             this.player.rotation = this.game.physics.arcade.angleToPointer(this.player);
             
-            if(controls.shoot.isDown || this.game.input.activePointer.isDown){
+            if(this.controls.shoot.isDown || this.game.input.activePointer.isDown){
                 this.shoot();
             }
-            if(controls.up.isDown){
+            if(this.controls.up.isDown){
                 //player.animations.play('run');
-                this.player.body.velocity.y -= PLAYER_SPEED;
+                this.player.body.velocity.y -= this.PLAYER_SPEED;
             }
-            else if(controls.down.isDown) {
+            else if(this.controls.down.isDown) {
                 //player.animations.play('run');
-                this.player.body.velocity.y += PLAYER_SPEED;
+                this.player.body.velocity.y += this.PLAYER_SPEED;
             }
-            if(controls.left.isDown) {
+            if(this.controls.left.isDown) {
                 //player.animations.play('run');
                 //player.scale.setTo(-1.5,1.5);
-                this.player.body.velocity.x-=PLAYER_SPEED;
+                this.player.body.velocity.x-=this.PLAYER_SPEED;
             }
-            else if(controls.right.isDown) {
+            else if(this.controls.right.isDown) {
                 //player.animations.play('run');
                 //player.scale.setTo(1.5,1.5);
-                this.player.body.velocity.x+=PLAYER_SPEED;
+                this.player.body.velocity.x+=this.PLAYER_SPEED;
             }
             if(this.player.body.velocity.x==0 && this.player.body.velocity.y==0)
             {
@@ -164,7 +179,7 @@ PoligonosDeLaMuerte.Level1.prototype ={
             }
             // Spawn a new ZOMBIE
             this.zombieTimer -= this.game.time.elapsed;
-            if(amountZombies<MAX_ZOMBIES){
+            if(this.amountZombies<this.MAX_ZOMBIES){
                 if (this.zombieTimer <= 0) {
                     this.zombieTimer = this.game.rnd.integerInRange(500, 1000);
                     this.generateEnemies();
@@ -172,14 +187,7 @@ PoligonosDeLaMuerte.Level1.prototype ={
             }
         }
         else{
-            var txt = game.add.text(this.player.x,this.player.y,'FIN',{font:"72px Amatic SC",fill:"#FF0000",align:"center"});
-            txt.anchor.setTo(0.5);
-            var txt2 = game.add.text(this.player.x,this.player.y+100,'Puntaje: '+this.player.score ,{font:"72px Arial",fill:"#FF0000",align:"center"});
-            txt2.anchor.setTo(0.5);
-            this.game.time.events.add(8000, function() {
-                    this.resetGame();
-                }, this);   
-            
+            this.resetGame();       
             }
 	},
 	render:function(game) {
@@ -191,7 +199,7 @@ PoligonosDeLaMuerte.Level1.prototype ={
         if(this.BULLET_TYPE[this.actualWeapon]===this.BULLET_TYPE[0] || this.BULLET_TYPE[this.actualWeapon]===this.BULLET_TYPE[1] ){
             this.game.debug.text('Balas Activas: ' + this.bullets.countLiving() + ' / ' + this.bullets.total, 32, 90);
         }*/
-        if(this.DEBUG ){
+        if(this.DEBUG){
              this.enemies.forEach(function(e){game.debug.body(e);});
             this.bullets.forEach(function(p){game.debug.body(p);});
             this.game.hamburgers.forEach(function(h){game.debug.body(h);});
@@ -225,14 +233,15 @@ PoligonosDeLaMuerte.Level1.prototype ={
         this.player.body.collideWorldBounds=true;
         this.player.immune=false;
         this.player.changeWeapon=true;
-        this.player.score=0;
+        this.player.score=0;    
         this.player.name='player';
         this.player.addScore = function (score){
             this.score+=score;
         }
-        this.player.life=PLAYER_LIFE;
+        this.player.life=this.PLAYER_LIFE;
         this.player.shootTimeZeus = 0;
-        this.game.playerAlive=true;        
+        this.game.playerAlive=true;
+        this.player.body.setSize(450,400,0,10);
     },
     initRespawns:function(){
         //this.respawnGroup = this.game.add.group();
@@ -251,23 +260,24 @@ PoligonosDeLaMuerte.Level1.prototype ={
         this.enemies.enableBody = true;
     },
 	resetGame:function() {
-        this.game.state.start('MainMenu');       
+        PoligonosDeLaMuerte.score=this.player.score;
+        this.game.state.start('GameOver');       
 	},
     generateEnemies:function(){       
-        if(NEXT_WAVE){
+        if(this.NEXT_WAVE){
             //var txt = this.game.add.text(this.game.width/2,this.game.height/2,'Ola NUMERO: '+WAVE_COUNT,{font:"72px Arial",fill:"#FF0000",align:"center"});
             //txt.anchor.setTo(0.5);
-            amountZombies++;
-            if(amountZombies === MAX_ZOMBIES)
+            this.amountZombies++;
+            if(this.amountZombies === this.MAX_ZOMBIES)
             {
-                amountZombies=0;
-                MAX_ZOMBIES+=WAVE_INCREMENT;
-                var enemigo = new PoligonosDeLaMuerte.EnemyBoss(this.game,this.respawnGroup[0].x,this.respawnGroup[2].y/2,25, PLAYER_SPEED*0.80,this.player,this.plataformLayer);
+                this.amountZombies=0;
+                this.MAX_ZOMBIES+=this.WAVE_INCREMENT;
+                var enemigo = new PoligonosDeLaMuerte.EnemyBoss(this.game,this.respawnGroup[0].x,this.respawnGroup[2].y/2,25, this.PLAYER_SPEED*0.80,this.player,this.plataformLayer);
                 this.enemies.add(enemigo); 
-                NEXT_WAVE=false;
-                this.game.time.events.add(TIME_BTW_WAVES, function() {
-                    NEXT_WAVE=true;
-                    WAVE_COUNT++;
+                this.NEXT_WAVE=false;
+                this.game.time.events.add(this.TIME_BTW_WAVES, function() {
+                    this.NEXT_WAVE=true;
+                    this.WAVE_COUNT++;
                     
                 }, this);   
             }else
@@ -301,7 +311,7 @@ PoligonosDeLaMuerte.Level1.prototype ={
                 default:
 
             }
-            var enemigo = new PoligonosDeLaMuerte.EnemyNormal(this.game,spawnPoint.x,spawnPoint.y,2, PLAYER_SPEED*0.90,this.player,this.plataformLayer);
+            var enemigo = new PoligonosDeLaMuerte.EnemyNormal(this.game,spawnPoint.x,spawnPoint.y,2, this.PLAYER_SPEED*0.90,this.player,this.plataformLayer);
             
             this.enemies.add(enemigo); 
         } 
@@ -311,12 +321,12 @@ PoligonosDeLaMuerte.Level1.prototype ={
         if(this.game.playerAlive){
             if(PoligonosDeLaMuerte.EnemyBoss.prototype.isPrototypeOf(enemy)){
                 if(!player.inmune){
-                    this.damagePlayer(10);
+                    this.damagePlayer(5,6);
                 }
             }
             else if(PoligonosDeLaMuerte.EnemyNormal.prototype.isPrototypeOf(enemy)){
                 if (!player.immune){
-                    this.damagePlayer(1);
+                    this.damagePlayer(1,1);
                     enemy.stealHamb();
             }
             }
@@ -324,11 +334,11 @@ PoligonosDeLaMuerte.Level1.prototype ={
             
         }
     },
-    damagePlayer:function(damagePoints){
+    damagePlayer:function(damagePoints,boss){
         damagePoints=damagePoints || 1;
         this.player.immune = true;
         this.player.alpha = 0.5;
-        this.game.time.events.add(this.INMUNE_TIME, function() {
+        this.game.time.events.add(this.INMUNE_TIME * boss, function() {
         this.player.immune = false;
         this.player.alpha = 1;}, this);
         this.player.life-=damagePoints;
@@ -431,32 +441,45 @@ PoligonosDeLaMuerte.Level1.prototype ={
             }
         }
         else if(this.BULLET_TYPE[this.actualWeapon]===this.BULLET_TYPE[this.BULLET_TYPE.indexOf('NORMAL')]){//Normal
-            if(this.time.now>NEXT_FIRE && this.bullets.countLiving() < 50){
+            if(this.time.now>this.NEXT_FIRE && this.bullets.countLiving() < 50){
                 this.bullet = this.bullets.getFirstExists(false);
                 
                 if(this.bullet){
                     this.bullet.reset(this.player.x,this.player.y);
-                    NEXT_FIRE=this.time.now + FIRE_RATE_NORMAL;
-                    this.game.physics.arcade.moveToPointer(this.bullet, PLAYER_SPEED*1.2);
+                    
+                    this.bullet.alpha=0;
+                    this.game.time.events.add(100, function() {
+                    this.bullet.alpha=1;
+                    }, this);   
+                    
+                    this.NEXT_FIRE=this.time.now + this.FIRE_RATE_NORMAL;
+                    this.game.physics.arcade.moveToPointer(this.bullet, this.PLAYER_SPEED*1.2);
                     
                     
                 }
             }
         }else if(this.BULLET_TYPE[this.actualWeapon]===this.BULLET_TYPE[this.BULLET_TYPE.indexOf('MACHINE_GUN')]){ //MACHINE_GUN
-            if(this.time.now>NEXT_FIRE && this.bullets.countLiving() < 110){
+            if(this.time.now>this.NEXT_FIRE && this.bullets.countLiving() < 110){
                 this.bullet = this.bullets.getFirstExists(false);
                 if(!this.bullet){
                     this.bullet= new PoligonosDeLaMuerte.Normal(this.game,999999,999999);
                     this.bullets.add(this.bullet);
                 }
                 this.bullet.reset(this.player.x,this.player.y);
+                                  
+                    
+                    this.bullet.alpha=0;
+                    this.game.time.events.add(100, function() {
+                    this.bullet.alpha=1;
+                    }, this);   
+                    
                 var rotation = this.game.math.angleBetween(this.bullet.x, this.bullet.y, (this.game.input.activePointer.x+ this.game.camera.x) / this.game.camera.scale.x, (this.game.input.activePointer.y+ this.game.camera.y) / this.game.camera.scale.y);
-                NEXT_FIRE=this.time.now + FIRE_RATE_MACHINE_GUN;
+                this.NEXT_FIRE=this.time.now + this.FIRE_RATE_MACHINE_GUN;
                 
                 var randomRotation=this.game.rnd.realInRange(-this.bulletAngleVariance,this.bulletAngleVariance);
                 
-                this.bullet.body.velocity.x = Math.cos(rotation) * PLAYER_SPEED*1.5;
-                this.bullet.body.velocity.y = Math.sin(rotation) * PLAYER_SPEED*1.5;
+                this.bullet.body.velocity.x = Math.cos(rotation) * this.PLAYER_SPEED*1.5;
+                this.bullet.body.velocity.y = Math.sin(rotation) * this.PLAYER_SPEED*1.5;
                 this.bullet.rotation = rotation;
                 this.game.add.tween(this.bullet)
                     .to({ rotation: rotation+randomRotation }, 100,Phaser.Easing.Cubic.In)

@@ -1,4 +1,4 @@
-var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {};
+var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {score:0};
 
 PoligonosDeLaMuerte.Preloader = function (game){
 	this.preloadBar=null;
@@ -9,7 +9,7 @@ PoligonosDeLaMuerte.Preloader.prototype ={
 
 		this.preloadBar=this.add.sprite(this.world.centerX,this.world.centerY,'preloaderBar');
 
-		this.game.stage.backgroundColor = '#FFFFFF';
+		this.game.stage.backgroundColor = '#999999';
         this.preloadBar.anchor.setTo(0.5);
 		
 		this.time.advancedTiming = true;
@@ -29,9 +29,7 @@ PoligonosDeLaMuerte.Preloader.prototype ={
         this.load.image('zombie2','assets/images/zombie2.png');
         
         this.load.image('hamburger','assets/images/hamburger.png');
-        //this.load.image('bullet','assets/images/nut.png');
         this.load.image('bullet','assets/images/bullet.png');
-        //this.load.image('bullet','assets/images/nut1.png');
 		this.load.image('titlescreen','assets/images/titlescreen.png');
 		this.load.image('button','assets/images/button.png');
         
@@ -45,7 +43,8 @@ PoligonosDeLaMuerte.Preloader.prototype ={
 	},
 	create:function(){
       
-		//this.state.start('MainMenu');
-        this.state.start('Level1');
+		  this.state.start('MainMenu');
+        //this.state.start('Level1');
+        //this.state.start('GameOver');
 	}
 }

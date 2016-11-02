@@ -1,4 +1,4 @@
-var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {};
+var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {score:0};
 
 PoligonosDeLaMuerte.GUITotalHamburguers = function(game, x, y,player) {
 	Phaser.Sprite.call(this, game, x, y, 'hamburger');

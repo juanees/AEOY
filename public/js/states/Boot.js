@@ -1,4 +1,5 @@
-var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {};
+var PoligonosDeLaMuerte = PoligonosDeLaMuerte || {score: 0};
+
  
 PoligonosDeLaMuerte.Boot = function (game){};
 
@@ -12,7 +13,7 @@ PoligonosDeLaMuerte.Boot.prototype ={
 	},
 	create:function(){
 	//loading screen will have a white background
-    this.game.stage.backgroundColor = '#FFFFFF';
+    this.game.stage.backgroundColor = '#999999';
     this.input.maxPointers =1;
     this.stage.disableVisibilityChange = true;
     //scaling options
