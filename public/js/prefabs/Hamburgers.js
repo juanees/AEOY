@@ -8,6 +8,8 @@ PoligonosDeLaMuerte.Hamburgers= function(game, x, y ) {
     this.scale.setTo(0.3);
     this.isAttached=false;
     this.isFollowed=false;
+    this.name='hamburger';
+    
 }
 
 PoligonosDeLaMuerte.Hamburgers.prototype = Object.create(Phaser.Sprite.prototype);

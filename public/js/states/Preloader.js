@@ -15,14 +15,13 @@ PoligonosDeLaMuerte.Preloader.prototype ={
 		this.time.advancedTiming = true;
 
 		this.load.setPreloadSprite(this.preloadBar);
-		
-        this.load.tilemap('map','assets/data/level1.json',null,Phaser.Tilemap.TILED_JSON);
-		this.load.image('tileset','assets/images/tiles.png')
         
-        //this.load.tilemap('map','assets/data/level2.json',null,Phaser.Tilemap.TILED_JSON);
-		//this.load.image('tileset','assets/images/tiles.jpg')
+        this.load.tilemap('map','assets/data/level2.json',null,Phaser.Tilemap.TILED_JSON);
+        this.load.image('tileset','assets/images/map/tileset.png'); 
+        this.load.image('dirt','assets/images/map/dirt.png');
         
-		this.load.image('player','assets/images/player.png');
+		this.load.image('player','assets/images/player2.png'); 
+        this.load.image('playerLightning','assets/images/player_lightStrike.png'); 
         
         this.load.image('background','assets/images/background4.png');
         
@@ -30,17 +29,14 @@ PoligonosDeLaMuerte.Preloader.prototype ={
         this.load.image('zombie2','assets/images/zombie2.png');
         
         this.load.image('hamburger','assets/images/hamburger.png');
-        this.load.image('bullet','assets/images/nut.png');
+        //this.load.image('bullet','assets/images/nut.png');
+        this.load.image('bullet','assets/images/bullet.png');
         //this.load.image('bullet','assets/images/nut1.png');
 		this.load.image('titlescreen','assets/images/titlescreen.png');
 		this.load.image('button','assets/images/button.png');
-        this.load.image('gameOver','assets/images/gameover.jpg');
         
         this.load.image('keyBoard','assets/images/wasd.png');
         
-        //this.load.audio('Darude-Sandstorm', ['assets/audio/Darude-Sandstorm.mp3', 'assets/audio/Darude-Sandstorm.ogg']);
-        
-        this.load.image('options','assets/images/options.png');
         
     this.game.load.spritesheet('explosion', 'assets/gfx/explosion.png', 128, 128);
         
@@ -49,7 +45,7 @@ PoligonosDeLaMuerte.Preloader.prototype ={
 	},
 	create:function(){
       
-		this.state.start('MainMenu');
-        //this.state.start('Level1');
+		//this.state.start('MainMenu');
+        this.state.start('Level1');
 	}
 }

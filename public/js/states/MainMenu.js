@@ -6,7 +6,7 @@ var titlescreen;
 
 PoligonosDeLaMuerte.MainMenu.prototype ={
 	create:function(game){
-		this.createButton(game,"Play",game.world.centerX,game.world.centerY+32, 300,100,
+		var button = this.createButton(game,"Play",game.world.centerX,game.world.centerY+32, 300,100,
 			function() {
 			this.state.start('Level1');
 			});
@@ -16,6 +16,7 @@ PoligonosDeLaMuerte.MainMenu.prototype ={
 			});
 		titlescreen  = game.add.sprite(game.world.centerX,game.world.centerY-192,'titlescreen');
 		titlescreen.anchor.setTo(0.5);
+        this.camera.follow(button, Phaser.Camera.FOLLOW_LOCKON);
 	},
 	update:function(game){
 
@@ -30,6 +31,7 @@ PoligonosDeLaMuerte.MainMenu.prototype ={
 		var txt = game.add.text(button1.x,button1.y,string,
 			{font:"72px Arial",fill:"#000",align:"center"});
 		txt.anchor.setTo(0.5);
+        return button1;
 	}
 		
 };

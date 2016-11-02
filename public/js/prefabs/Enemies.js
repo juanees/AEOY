@@ -17,9 +17,9 @@ PoligonosDeLaMuerte.EnemyNormal = function(game, x, y, health,speed,target,colli
     this.haveHamburger=false;
     this.playerDistance=0;
     this.hamburgerDistance=0;
-    this.borders=this.game.borders;
     this.targets={};
     this.destroyFlag=false;
+    this.borders=this.game.borders;
     
     this.getClosestTarget();
 }
@@ -39,7 +39,7 @@ PoligonosDeLaMuerte.EnemyNormal.prototype.update = function() {
                 this.game.physics.arcade.collide(this, this.collisionLayer);
                 this.game.physics.arcade.collide(this, this.game.hamburgers,this.pickHamb.bind(this));
                 if(this.target.obj !== undefined && this.target.obj.alive){
-                    switch(this.target.obj.key) {
+                    switch(this.target.obj.name) {
                         case "player":
                             this.moveEnemy(this.target.obj.x, this.target.obj.y);
                             
@@ -53,7 +53,6 @@ PoligonosDeLaMuerte.EnemyNormal.prototype.update = function() {
                             this.body.velocity.setTo(0, 0);
                     }
                 }else{
-                    console.log("undefinea")
                     this.getClosestTarget();
                 }
             }
@@ -100,6 +99,7 @@ PoligonosDeLaMuerte.EnemyNormal.prototype.getClosestTarget= function(){
             var dis=this.game.math.distance(this.x, this.y, h.x, h.y);
             distances.push({"obj":h,"distance":dis});
         }.bind(this));
+        
         distances.forEach(function(d){
             if(!d.obj.isFollowed){
             if(d.distance < minDis){
@@ -158,6 +158,7 @@ PoligonosDeLaMuerte.EnemyNormal.prototype.pickHamb = function(e,h) {
 } 
 PoligonosDeLaMuerte.EnemyNormal.prototype.stealHamb = function() {
     this.loadTexture('zombie2', 0, false);
+    
     this.haveHamburger=true;
     
     this.getClosestBorder();   
