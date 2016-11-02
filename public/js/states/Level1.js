@@ -453,7 +453,7 @@ PoligonosDeLaMuerte.Level1.prototype ={
                     }, this);   
                     
                     this.NEXT_FIRE=this.time.now + this.FIRE_RATE_NORMAL;
-                    this.game.physics.arcade.moveToPointer(this.bullet, this.PLAYER_SPEED*1.2);
+                    this.game.physics.arcade.moveToPointer(this.bullet, this.PLAYER_SPEED*2.5);
                     
                     
                 }
@@ -478,8 +478,8 @@ PoligonosDeLaMuerte.Level1.prototype ={
                 
                 var randomRotation=this.game.rnd.realInRange(-this.bulletAngleVariance,this.bulletAngleVariance);
                 
-                this.bullet.body.velocity.x = Math.cos(rotation) * this.PLAYER_SPEED*1.5;
-                this.bullet.body.velocity.y = Math.sin(rotation) * this.PLAYER_SPEED*1.5;
+                this.bullet.body.velocity.x = Math.cos(rotation) * this.PLAYER_SPEED*2.5;
+                this.bullet.body.velocity.y = Math.sin(rotation) * this.PLAYER_SPEED*2.5;
                 this.bullet.rotation = rotation;
                 this.game.add.tween(this.bullet)
                     .to({ rotation: rotation+randomRotation }, 100,Phaser.Easing.Cubic.In)

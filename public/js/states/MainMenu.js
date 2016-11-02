@@ -17,7 +17,7 @@ PoligonosDeLaMuerte.MainMenu.prototype ={
 		titlescreen  = game.add.sprite(game.world.centerX,game.world.centerY-192,'titlescreen');
 		titlescreen.anchor.setTo(0.5);
         this.camera.follow(button, Phaser.Camera.FOLLOW_LOCKON);
-	},
+    },
 	update:function(game){
 
 	},
