@@ -13,7 +13,7 @@ var FIRE_RATE_MACHINE_GUN=50;
 
 var NEXT_FIRE=0;
 
-var NEXT_WAVE=false;
+var NEXT_WAVE=true;
 var TIME_BTW_WAVES=2000;
 
 var MAX_ZOMBIES=5;
